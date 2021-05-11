@@ -18,6 +18,7 @@ body {
 
 ul {
     list-style-type: none;
+    padding: 0;
 }
 
 a {
@@ -99,11 +100,7 @@ footer {
     color: #797979;
     background-color: #ffffff;
     box-shadow: 6px 6px 7px 0px #343a40;
-    padding: .5rem 1rem;
-}
-
-.back-to-result {
-    margin: 2rem 4rem;
+    padding: 3rem;
 }
 
 .back-to-result a {
@@ -114,7 +111,7 @@ footer {
     border-bottom: solid 1px #2285d9;
 }
 
-.content h1, h3, h4 {
+.content h1, h2, h3, h4, h5, h6 {
     color: #343a40;
 }
 
@@ -136,3 +133,63 @@ footer {
     transform: scale(1.05);
     cursor: pointer;
 }
+
+/* CART */
+
+.cart {
+    display: flex;
+    padding-left: 6rem;
+    padding-right: 6rem;
+}
+
+.cart h2, h3 ul {
+    margin-top: 0;
+}
+
+.cart-list {
+    flex: 3 1 30rem;
+    padding-right: 10rem;
+}
+
+.cart-list li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #797979;
+    padding: .6rem 0;
+}
+
+.cart-list a {
+    color: #343a40;
+    font-weight: 400;  
+    font-size: 1.5rem;
+}
+
+.cart-list a:hover {
+    color: #2285d9;
+}
+
+.cart-action {
+    flex: 1 1 10rem;
+}
+
+.delete-button {
+    background-color: #797979;
+    color: #ffffff;
+    border: 1px solid #797979;
+    padding: .6rem;
+    transition: ease .5s;
+    font-size: 1.3rem;
+    margin-top: 1rem;
+}
+
+.delete-button:hover {
+    background-color: #2285d9;
+    border: 1px solid #2285d9;
+    transform: scale(1.1);
+}
+
+.cart-price {
+    font-weight: 400;
+    color: #343a40;
+}
+
