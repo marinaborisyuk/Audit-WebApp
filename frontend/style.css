@@ -8,9 +8,10 @@ html {
 
 body {
     height: 100vh;
-    font: 1.5rem;
+    font: 1.7rem;
     margin: 0;
-    font-weight: 400;
+    color: #ffffff;
+    font-weight: 100;
     font-size: 1.45rem;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI", Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
@@ -37,7 +38,6 @@ a {
 header {
     grid-area: header;
     background-color: #343a40;
-    color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -61,8 +61,13 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+}
+
+#main-container {
+    background: url(src/images/background.jpg) no-repeat;
+    background-size: cover;
+    background-position: center center;
 }
 
 /* SERVICES */
@@ -74,33 +79,39 @@ footer {
 }
 
 .service {
-    width: 25%;
     text-align: center;
     padding: 1.15rem 1.25rem;
-    border: 1px solid rgba(0,0,0,.125);
+    transition: ease 0.4s all;
+}
+
+.service:hover {
+    transform: scale(1.1);
 }
 
 .service a {
-    color: #212529;
+    color: #ffffff;
+    font-size: 1.8rem;
 }
 
 .content {
     width: 80%;
     margin: 3rem auto;
-    border: solid 1px #e6e6e6;
     color: #797979;
+    background-color: #ffffff;
+    box-shadow: 6px 6px 7px 0px #343a40;
+    padding: .5rem 1rem;
 }
 
 .back-to-result {
-    margin: 3rem 4rem;
+    margin: 2rem 4rem;
 }
 
 .back-to-result a {
-    color: #343a40;
+    color: #2285d9;
 }
 
 .back-to-result a:hover {
-    border-bottom: solid 1px #343a40;
+    border-bottom: solid 1px #2285d9;
 }
 
 .content h1, h3, h4 {
@@ -118,4 +129,10 @@ footer {
     border: 1px solid #2285d9;
     padding: 1rem;
     margin-bottom: 1.1rem;
+    transition: ease .5s all;
+}
+
+.primary:hover {
+    transform: scale(1.05);
+    cursor: pointer;
 }

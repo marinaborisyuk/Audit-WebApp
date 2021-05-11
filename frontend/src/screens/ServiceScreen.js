@@ -2,6 +2,12 @@ import { getService } from '../api';
 import {parseRequestUrl} from '../utils';
 
 const ServiceScreen = {
+    after_render: () => {
+        const request = parseRequestUrl();
+        document.getElementById('add-button').addEventListener('click', () => {
+            document.location.hash = `/cart/${request.id}`;
+        });
+    },
     render: async () => {
         const request = parseRequestUrl();
         const service = await getService(request.id);
@@ -9,6 +15,7 @@ const ServiceScreen = {
             return `<div>${service.error}</div>`;
         }
         return `
+            <div class = "background"> 
             <div class = "content">
                 <div class = "back-to-result">
                     <a href = "/#/">Вернуться обратно</a>
@@ -29,7 +36,7 @@ const ServiceScreen = {
                         </li>
                     </ul>
                 </div>
-            </div>`;
+            </div></div>`;
     },
 };
 
