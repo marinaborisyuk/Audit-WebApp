@@ -3,7 +3,7 @@ import axios from 'axios';
 const HomeScreen =  {
     render: async () => {
         const response = await axios({
-            url: "http://localhost:5000/api/services",
+            url: "http://localhost:3000/api/services",
             headers: {
                 "Content-Type":"applocation/json",
             },

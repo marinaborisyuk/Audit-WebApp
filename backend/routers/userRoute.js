@@ -1,14 +1,15 @@
 import express from 'express';
-import User from './models/userModel';
+import User from '../models/userModel';
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.get('/createadmin', async (req, res) => {
+userRouter.get('/createadmin', async (req, res) => {
     try {
         const user = new User({
             name: 'admin',
             email: 'admin@gmail.com',
-            password: '123'
+            password: '123',
+            isAdmin: true
         });
         const createUser = await user.save();
         res.send(createUser);
@@ -16,3 +17,5 @@ router.get('/createadmin', async (req, res) => {
         res.status(500).send({message: err.message});
     }
 });
+
+export default userRouter;

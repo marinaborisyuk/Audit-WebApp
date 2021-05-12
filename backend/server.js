@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import data from './data';
 import config from './config';
+import userRouter from './routers/userRoute';
 
 
 mongoose.connect(config.MONGODB_URL, {
@@ -19,6 +20,9 @@ mongoose.connect(config.MONGODB_URL, {
 const app = express();
 
 app.use(cors());
+
+app.use('/api/users', userRouter);
+
 app.get("/api/services", (req, res) => {
     res.send(data.services);
 });
@@ -32,6 +36,6 @@ app.get('/api/services/:id', (req, res) => {
     }
 });
 
-app.listen(5000, () => {
-    console.log('Server has been started on 5000 port');
+app.listen(3000, () => {
+    console.log('Server has been started on 3000 port');
 });
