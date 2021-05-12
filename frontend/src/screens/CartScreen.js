@@ -1,6 +1,8 @@
 import { getService } from "../api";
 import { getCartItems, setCartItems } from "../localStorage";
-import { parseRequestUrl } from "../utils";
+import { parseRequestUrl, rerender } from "../utils";
+
+/* eslint-disable no-use-before-define */
 
 const addToCart = (item, forceUpdate = false) => {
     let cartItems = getCartItems();
@@ -11,11 +13,32 @@ const addToCart = (item, forceUpdate = false) => {
         cartItems = [...cartItems, item];
     }
     setCartItems(cartItems);
+    if (forceUpdate) {
+        rerender(CartScreen);
+    }
+};
+
+const removeFromCart = (id) => {
+    setCartItems(getCartItems().filter((x) => x.service !== id));
+    if (id === parseRequestUrl().id) {
+        document.location.hash = '/cart';
+    } else {
+        rerender(CartScreen);
+    }
 };
 
 const CartScreen = {
     after_render: () => {
-        
+        const deleteButtons = document.getElementsByClassName('delete-button');
+        Array.from(deleteButtons).forEach(deleteButton => {
+            deleteButton.addEventListener('click', () => {
+                console.log(deleteButton);
+                removeFromCart(deleteButton.id);
+            });
+        });
+        document.getElementById('checkout-button').addEventListener('click', () => {
+            document.location.hash = '/signin';
+        })
     }, 
     render: async () => {
         const request = parseRequestUrl();
@@ -38,14 +61,14 @@ const CartScreen = {
                         </li>
                         ${
                             cartItems.length === 0 ?
-                                '<div>Корзина пуста. <a href = "/#/">Выбрать услугу</a></div>' : 
+                                '<div class = "empty-cart">Корзина пуста... <a href = "/#/">Выбрать услугу</a></div>' : 
                                 cartItems.map((item) => `
                                     <li>
                                         <div class = "cart-name">
                                             <div>
                                                 <a href = "/#/service/${item.service}">${item.name}</a>
                                             </div>
-                                            <button type = "button" class = "delete-button" id = "${item.servive}">Удалить</button>
+                                            <button type = "button" class = "delete-button" id = "${item.service}">Удалить</button>
                                         </div>
                                         <div class = "cart-price">
                                             ${item.price}

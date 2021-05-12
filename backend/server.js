@@ -1,6 +1,20 @@
 import express from 'express';
 import cors from 'cors';
-import data from './data.js';
+import mongoose from 'mongoose';
+import data from './data';
+import config from './config';
+
+
+mongoose.connect(config.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+}).then(() => {
+    console.log('Connected to mongodb!');
+})
+.catch((error) => {
+    console.log(error.reason)
+});
 
 const app = express();
 
@@ -18,6 +32,6 @@ app.get('/api/services/:id', (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log('Server has been started on 3000 port');
+app.listen(5000, () => {
+    console.log('Server has been started on 5000 port');
 });
