@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 import data from './data';
 import config from './config';
-import userRouter from './routers/userRoute';
+import userRouter from './routers/userRouter';
 
 
 mongoose.connect(config.MONGODB_URL, {
@@ -20,7 +21,7 @@ mongoose.connect(config.MONGODB_URL, {
 const app = express();
 
 app.use(cors());
-
+app.use(bodyParser.json());
 app.use('/api/users', userRouter);
 
 app.get("/api/services", (req, res) => {
@@ -34,6 +35,11 @@ app.get('/api/services/:id', (req, res) => {
     } else {
         res.status(404).send({message: 'Услуга не найдена...'});
     }
+});
+
+app.use((err, req, res, next) => {
+    const status = err.name && err.name === 'ValidationError' ? 400 : 500;
+    res.status(status).send({message: err.message});
 });
 
 app.listen(3000, () => {
