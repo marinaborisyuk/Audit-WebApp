@@ -1,5 +1,5 @@
 import { getService } from '../api';
-import {parseRequestUrl} from '../utils';
+import {hideLoading, parseRequestUrl, showLoading} from '../utils';
 
 const ServiceScreen = {
     after_render: () => {
@@ -10,10 +10,12 @@ const ServiceScreen = {
     },
     render: async () => {
         const request = parseRequestUrl();
+        showLoading();
         const service = await getService(request.id);
         if (service.error) {
             return `<div>${service.error}</div>`;
         }
+        hideLoading();
         return `
             <div class = "background"> 
             <div class = "content">

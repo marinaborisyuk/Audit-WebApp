@@ -1,13 +1,16 @@
 import axios from 'axios';
+import { hideLoading, showLoading } from '../utils';
 
 const HomeScreen =  {
     render: async () => {
+        showLoading();
         const response = await axios({
             url: "http://localhost:3000/api/services",
             headers: {
                 "Content-Type":"applocation/json",
             },
         });
+        hideLoading();
         if (!response || response.statusText !== 'OK') {
             return `<div>Ошибка при получении данных</div>`;
         }
