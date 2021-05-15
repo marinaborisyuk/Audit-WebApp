@@ -1,6 +1,6 @@
 import { signin } from "../api";
 import { getUserInfo, setUserInfo } from "../localStorage";
-import { hideLoading, showLoading, showMessage } from "../utils";
+import { hideLoading, redirectUser, showLoading, showMessage } from "../utils";
 
 const SigninScreen = {
     after_render: () => {
@@ -16,14 +16,17 @@ const SigninScreen = {
                 showMessage(data.error);
             } else {
                 setUserInfo(data);
-                document.location.hash = '/';
+                redirectUser();
+                // showMessage('Заказ успешно оформлен!');
+                // document.location.hash = '/';
             }
         });
 
     },
     render: () => {
         if (getUserInfo().name) {
-            document.location.hash = '/';
+            redirectUser();
+            // document.location.hash = '/';
         }
         return `
             <div class = "content form-container">

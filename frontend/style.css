@@ -270,5 +270,24 @@ footer {
     justify-content: space-between;
 }
 
+/* CHECKOUT STEPS  */
 
+.checkout-steps {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    margin: 1rem auto;
+}
+
+.checkout-steps > div {
+    color: #F0F0F0;
+    margin-top: 1.7rem;
+    width: 20rem;
+    text-align: center;
+    border-top: 1px solid #F7F7F7;
+}
+
+.checkout-steps > div.active {
+    border-top: 1px solid #2285d9;
+}
 
