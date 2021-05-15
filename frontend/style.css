@@ -172,6 +172,7 @@ footer {
     display: flex;
     padding-left: 6rem;
     padding-right: 6rem;
+    justify-content: space-between;
 }
 
 .cart h2, h3 ul {
@@ -289,5 +290,21 @@ footer {
 
 .checkout-steps > div.active {
     border-top: 1px solid #2285d9;
+}
+
+#contact-li {
+    display: block;
+    border-bottom: none;
+    margin-bottom: 2rem;
+}
+
+.order-info .cart-list {
+    padding-right: 0;
+    flex: none;
+    width: 75rem;
+}
+
+.order-info .cart-list li {
+    padding: 1.3rem 0;
 }
 

@@ -32,7 +32,7 @@ const ContactInfoScreen = {
                             <h2>Контактные данные</h2>
                         </li>
                         <li>
-                            <input type = "name" name = "firmName" id = "firmName" placeholder = "Введите полное название фирмы..." value = "${firmName}" required>
+                            <input type = "text" name = "firmName" id = "firmName" placeholder = "Введите полное название фирмы..." value = "${firmName}" required>
                         </li>
                         <li>
                             <input type = "text" name = "address" id = "address" placeholder = "Введите адрес фирмы..." value = "${address}" required>

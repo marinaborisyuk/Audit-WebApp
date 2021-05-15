@@ -8,6 +8,7 @@ import Header from './components/Header';
 import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ContactInfoScreen from './screens/ContactInfoScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 
 const routes = {
     "/": HomeScreen,
@@ -18,7 +19,7 @@ const routes = {
     "/register": RegisterScreen, 
     "/profile": ProfileScreen,
     "/contactinfo": ContactInfoScreen,
-
+    "/placeorder": PlaceOrderScreen,
 };
 
 const router = async () => {
