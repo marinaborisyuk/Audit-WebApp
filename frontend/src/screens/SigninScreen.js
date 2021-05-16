@@ -6,7 +6,7 @@ const SigninScreen = {
     after_render: () => {
         document.getElementById("signin-form").addEventListener("submit", async (e) => {
             e.preventDefault();
-            showLoading()
+            showLoading();
             const data = await signin({
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value
@@ -17,8 +17,6 @@ const SigninScreen = {
             } else {
                 setUserInfo(data);
                 redirectUser();
-                // showMessage('Заказ успешно оформлен!');
-                // document.location.hash = '/';
             }
         });
 
@@ -26,7 +24,6 @@ const SigninScreen = {
     render: () => {
         if (getUserInfo().name) {
             redirectUser();
-            // document.location.hash = '/';
         }
         return `
             <div class = "content form-container">

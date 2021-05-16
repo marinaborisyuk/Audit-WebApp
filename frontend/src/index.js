@@ -10,6 +10,8 @@ import ProfileScreen from './screens/ProfileScreen';
 import ContactInfoScreen from './screens/ContactInfoScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
+import DashboardScreen from './screens/DashboardScreen';
+import ServiceListScreen from './screens/ServiceListScreen';
 
 const routes = {
     "/": HomeScreen,
@@ -22,6 +24,9 @@ const routes = {
     "/profile": ProfileScreen,
     "/contactinfo": ContactInfoScreen,
     "/placeorder": PlaceOrderScreen,
+    "/dashboard": DashboardScreen,
+    "/servicelist": ServiceListScreen,
+
 };
 
 const router = async () => {
