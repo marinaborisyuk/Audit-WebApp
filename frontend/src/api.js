@@ -16,7 +16,6 @@ export const getService = async (id) => {
         }
         return response.data;
     } catch(err) {
-        console.log(err);
         return {error: err.response.data.message || err.message};
     }
 };
@@ -39,7 +38,6 @@ export const signin = async ({email, password}) => {
         }
         return responce.data;
     } catch (err) {
-        console.log(err);
         return {error: err.response.data.message || err.message};
     }
 };
@@ -63,7 +61,6 @@ export const register = async ({name, email, password}) => {
         }
         return responce.data;
     } catch (err) {
-        console.log(err);
         return {error: err.response.data.message || err.message};
     }
 };
@@ -76,7 +73,7 @@ export const update = async ({name, email, password}) => {
             method: 'PUT',
             header: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
             },
             data: {
                 name,
@@ -89,7 +86,66 @@ export const update = async ({name, email, password}) => {
         }
         return responce.data;
     } catch (err) {
-        console.log(err);
         return {error: err.response.data.message || err.message};
     }
+};
+
+export const createOrder = async (order) => {
+    try {
+        const { token } = getUserInfo(); 
+        const response = await axios({
+            url: `${apiUrl}/api/orders`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: order, 
+        });
+        if (response.statusText !== 'Created') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        return {error: err.responce ? err.responce.data.message : err.message};
+    }   
+};
+
+export const getOrder = async (id) => {
+    try {
+        const { token } = getUserInfo();
+    const response = await axios({
+        url: `${apiUrl}/api/orders/${id}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    if (response.statusText !== 'OK') {
+        throw new Error(response.data.message);
+    }
+    return response.data;
+    } catch (err) {
+        return {error: err.message};
+    }
+};
+
+export const getMyOrders = async () => {
+    try {
+        const { token } = getUserInfo();
+        const response = await axios({
+            url: `${apiUrl}/api/orders/mine`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        }); 
+        if (response.statusText !== 'OK') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        return { error: err.responce ? err.responce.data.message : err.message };
+    }
+    
 };

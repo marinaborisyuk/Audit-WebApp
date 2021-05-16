@@ -1,44 +1,18 @@
-import { createOrder } from "../api";
-import CheckoutSteps from "../components/CheckoutSteps";
-import { cleanCart, getCartItems, getContactInfo } from "../localStorage"
-import { hideLoading, showLoading, showMessage } from "../utils";
+import { getOrder } from "../api";
+import { parseRequestUrl } from "../utils";
 
-const convertCartToOrder = () => {
-    const orderItems = getCartItems();
-    if (orderItems.length === 0) {
-        document.location.hash = '/cart';
-    }
-    const contactInfo = getContactInfo();
-    const totalPrice = orderItems.reduce((a, c) => a + c.price, 0);
-    return { orderItems, contactInfo, totalPrice };
-};
-
-const PlaceOrderScreen = {
-    after_render: () => {
-        document.getElementById("placeorder-button").addEventListener('click', async () => {
-            const order = convertCartToOrder();
-            showLoading();
-            const data = await createOrder(order);
-            hideLoading();
-            if (data.error) {
-                showMessage(data.error);
-            } else {
-                showMessage('Заказ сформирован!');
-                cleanCart();
-                document.location.hash = `/order/${data.order._id}`;
-                // document.location.hash = '/cart';
-            }
-        });
-    },
-    render: () => {
-        const { orderItems, contactInfo ,totalPrice } = convertCartToOrder();
+const OrderScreen = {
+    after_render: () => {},
+    render: async () => {
+        const request = parseRequestUrl();
+        const { _id, contactInfo, orderItems, totalPrice } = await getOrder(request.id);
         return `
             <div>
-                ${CheckoutSteps.render({step1: true, step2: true, step3: true})}
                 <div class = "cart content">
                     <div class = "order-info">
                         <div class = "cart-list">
                             <ul class = "cart-list-container">
+                                <li><h1>Заказ №${_id}</h1></li>
                                 <li id = "contact-li">
                                     <h2>Контактные данные</h2>
                                     <div>
@@ -71,7 +45,6 @@ const PlaceOrderScreen = {
                     </div>
                     <div class = "order-action" >
                         <h3>Итоговая сумма: ${totalPrice} руб.</h3>     
-                        <button id = "placeorder-button" class = "primary">Подтвердить заказ</button>
                     </div>
                 </div>
             </div>
@@ -79,4 +52,4 @@ const PlaceOrderScreen = {
     },
 };
 
-export default PlaceOrderScreen;
+export default OrderScreen;

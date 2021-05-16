@@ -56,3 +56,7 @@ export const setContactInfo = ({
 }) => {
     localStorage.setItem('contactInfo', JSON.stringify({firmName, address, city, firmPhone}));
 };
+
+export const cleanCart = () => {
+    localStorage.removeItem('cartItems');
+}

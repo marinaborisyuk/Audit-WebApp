@@ -308,3 +308,29 @@ footer {
     padding: 1.3rem 0;
 }
 
+.profile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-container {
+    width: 75%;
+    text-align: center;
+}
+
+.profile-info {
+    width: 40rem;
+}
+
+.profile-orders {
+    width: 60rem;
+}
+
+.profile-orders td, th {
+    padding: 0 1rem;
+}
+
+tbody > tr:nth-child(odd) {
+    background-color: #F0F0F0;
+}
+
