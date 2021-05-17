@@ -39,6 +39,47 @@ export const getService = async (id) => {
     }
 };
 
+export const createService = async () => {
+    try {
+        const { token } = getUserInfo();
+        const response = await axios({
+            url: `${apiUrl}/api/services`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        if (response.statusText !== 'Created') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        return {error: err.responce.data.message || err.message};
+    }
+};
+
+export const updateService = async (service) => {
+    try {
+        const { token } = getUserInfo();
+        const response = await axios({
+            url: `${apiUrl}/api/services/${service._id}`,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: service,
+        });
+        if (response.statusText !== 'OK') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        return {error: err.responce.data.message || err.message};
+    }
+};
+
 export const signin = async ({email, password}) => {
     try {
         const responce = await axios({

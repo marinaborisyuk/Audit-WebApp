@@ -12,10 +12,12 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import ServiceListScreen from './screens/ServiceListScreen';
+import ServiceEditScreen from './screens/ServiceEditScreen';
 
 const routes = {
     "/": HomeScreen,
     "/service/:id": ServiceScreen,
+    "/service/:id/edit": ServiceEditScreen,
     "/order/:id": OrderScreen,
     "/cart/:id": CartScreen,
     "/cart": CartScreen,
@@ -26,7 +28,7 @@ const routes = {
     "/placeorder": PlaceOrderScreen,
     "/dashboard": DashboardScreen,
     "/servicelist": ServiceListScreen,
-
+    
 };
 
 const router = async () => {

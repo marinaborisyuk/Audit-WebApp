@@ -1,4 +1,5 @@
 import { getService } from '../api';
+import Rating from '../components/Rating';
 import {hideLoading, parseRequestUrl, showLoading} from '../utils';
 
 const ServiceScreen = {
@@ -26,6 +27,9 @@ const ServiceScreen = {
                     <ul>
                         <li>
                             <h1>${service.name}</h1>
+                            <div class = "service-rating">
+                                ${Rating.render({value: service.rating, text: `${service.numReviews} просмотров`})}
+                            </div>
                         </li>
                         <li>${service.description}</li>
                         <li><h3>Компания "КлассАудит" оказывает следующие виды услуг по данному аудиту:</h3></li>

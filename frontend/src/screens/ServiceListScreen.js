@@ -1,8 +1,19 @@
 import DashboardMenu from "../components/DashboardMenu";
-import { getServices } from "../api";
+import { createService, getServices } from "../api";
 
 const ServiceListScreen = {
-    after_render: () => {},
+    after_render: () => {
+        document.getElementById('create-service-button').addEventListener('click', async () => {
+            const data = await createService();
+            document.location.hash = `/service/${data.service._id}/edit`;
+        });
+        const editButtons = document.getElementsByClassName('edit-button');
+        Array.from(editButtons).forEach(editButton => {
+            editButton.addEventListener('click', () => {
+                document.location.hash = `/service/${editButton.id}/edit`;
+            });
+        });
+    },
     render: async () => {
         const services = await getServices();  
         return `
@@ -30,8 +41,8 @@ const ServiceListScreen = {
                                     <td>${service.price}</td>
                                     <td>${service.category}</td>
                                     <td class = "buttons-td">
-                                        <button id = "${service._id}" class = "primary">Изменить</button>
-                                        <button id = "${service._id}" class = "primary">Удалить</button>
+                                        <button id = "${service._id}" class = "edit-button primary">Изменить</button>
+                                        <button id = "${service._id}" class = "delete-btn primary">Удалить</button>
                                     </td>
                                 </tr>
                             `).join('\n')}

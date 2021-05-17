@@ -6,7 +6,7 @@ import data from './data';
 import config from './config';
 import userRouter from './routers/userRouter';
 import orderRouter from './routers/orderRouter';
-
+import serviceRoter from './routers/serviceRoter';
 
 mongoose.connect(config.MONGODB_URL, {
     useNewUrlParser: true,
@@ -24,6 +24,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/users', userRouter);
+app.use('/api/services', serviceRoter);
 app.use('/api/orders', orderRouter);
 
 app.get("/api/services", (req, res) => {
@@ -38,6 +39,8 @@ app.get('/api/services/:id', (req, res) => {
         res.status(404).send({message: 'Услуга не найдена...'});
     }
 });
+
+
 
 app.use((err, req, res, next) => {
     const status = err.name && err.name === 'ValidationError' ? 400 : 500;

@@ -18,8 +18,6 @@ const RegisterScreen = {
             } else {
                 setUserInfo(data);
                 redirectUser();
-                // showMessage('Заказ успешно оформлен!');
-                // document.location.hash = '/';
             }
         });
 
@@ -27,7 +25,6 @@ const RegisterScreen = {
     render: () => {
         if (getUserInfo().name) {
             redirectUser();
-            // document.location.hash = '/';
         }
         return `
             <div class = "content form-container">
