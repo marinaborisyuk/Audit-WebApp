@@ -54,4 +54,14 @@ serviceRoter.put('/:id', isAuth, isAdmin, expressAsyncHandler( async (req, res) 
     }
 }));
 
+serviceRoter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    const service = await Service.findById(req.params.id);
+    if (service) {
+        const deletedService = await service.remove();
+        res.send({message: 'Услуга удалена.', service: deletedService});
+    } else {
+        res.status(404).send({message: 'Услуга не найдена...'});    
+    }
+}));
+
 export default serviceRoter;

@@ -15,6 +15,7 @@ var _utils = require("../utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import ServiceListScreen from '../../frontend/src/screens/ServiceListScreen';
 const serviceRoter = _express.default.Router();
 
 serviceRoter.get('/', (0, _expressAsyncHandler.default)(async (req, res) => {
@@ -70,6 +71,21 @@ serviceRoter.put('/:id', _utils.isAuth, _utils.isAdmin, (0, _expressAsyncHandler
         message: 'Ошибка при изменении услуги...'
       });
     }
+  } else {
+    res.status(404).send({
+      message: 'Услуга не найдена...'
+    });
+  }
+}));
+serviceRoter.delete('/:id', _utils.isAuth, _utils.isAdmin, (0, _expressAsyncHandler.default)(async (req, res) => {
+  const service = await _serviceModel.default.findById(req.params.id);
+
+  if (service) {
+    const deletedService = await service.remove();
+    res.send({
+      message: 'Услуга удалена.',
+      service: deletedService
+    });
   } else {
     res.status(404).send({
       message: 'Услуга не найдена...'

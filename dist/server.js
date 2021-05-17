@@ -8,6 +8,8 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _bodyParser = _interopRequireDefault(require("body-parser"));
 
+var _path = _interopRequireDefault(require("path"));
+
 var _data = _interopRequireDefault(require("./data"));
 
 var _config = _interopRequireDefault(require("./config"));
@@ -39,6 +41,8 @@ app.use('/api/orders', _orderRouter.default);
 app.get("/api/services", (req, res) => {
   res.send(_data.default.services);
 });
+app.use('/uploads', _express.default.static(_path.default.join(__dirname, '/../uploads/')));
+app.use(_express.default.static(_path.default.join(__dirname, '/.../frontend')));
 app.get('/api/services/:id', (req, res) => {
   const service = _data.default.services.find(x => x._id === req.params.id);
 
@@ -49,6 +53,9 @@ app.get('/api/services/:id', (req, res) => {
       message: 'Услуга не найдена...'
     });
   }
+});
+app.get('*', (req, res) => {
+  res.sendFile(_path.default.join(__dirname, '/../frontend/index.html'));
 });
 app.use((err, req, res, next) => {
   const status = err.name && err.name === 'ValidationError' ? 400 : 500;

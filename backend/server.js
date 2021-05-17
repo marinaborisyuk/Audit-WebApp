@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import path from 'path';
 import data from './data';
 import config from './config';
 import userRouter from './routers/userRouter';
@@ -30,6 +31,8 @@ app.use('/api/orders', orderRouter);
 app.get("/api/services", (req, res) => {
     res.send(data.services);
 });
+app.use('/uploads', express.static(path.join(__dirname, '/../uploads/')))
+app.use(express.static(path.join(__dirname, '/.../frontend')));
 
 app.get('/api/services/:id', (req, res) => {
     const service = data.services.find((x) => x._id === req.params.id);  
@@ -40,7 +43,9 @@ app.get('/api/services/:id', (req, res) => {
     }
 });
 
-
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/../frontend/index.html'))
+});
 
 app.use((err, req, res, next) => {
     const status = err.name && err.name === 'ValidationError' ? 400 : 500;

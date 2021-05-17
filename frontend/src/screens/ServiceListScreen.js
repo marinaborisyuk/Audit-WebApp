@@ -1,5 +1,6 @@
 import DashboardMenu from "../components/DashboardMenu";
-import { createService, getServices } from "../api";
+import { createService, getServices, deleteService } from "../api";
+import { showLoading, hideLoading, rerender, showMessage } from '../utils';
 
 const ServiceListScreen = {
     after_render: () => {
@@ -13,6 +14,20 @@ const ServiceListScreen = {
                 document.location.hash = `/service/${editButton.id}/edit`;
             });
         });
+        const deleteButtons = document.getElementsByClassName('delete-btn');
+        Array.from(deleteButtons).forEach((deleteButton) => {
+            deleteButton.addEventListener('click', async () => {
+                if (confirm('Удалить услугу?!')) {
+                    showLoading();
+                    const data = await deleteService(deleteButton.id);
+                    if (data.error) {
+                        showMessage(data);
+                    } else 
+                    hideLoading();
+                    rerender(ServiceListScreen);
+                }
+            });
+        }); 
     },
     render: async () => {
         const services = await getServices();  
