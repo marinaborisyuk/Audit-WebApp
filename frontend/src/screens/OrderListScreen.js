@@ -18,6 +18,13 @@ const OrderListScreen = {
                 }
             });
         }); 
+        const editButtons = document.getElementsByClassName('edit-button');
+        Array.from(editButtons).forEach((editButton) => {
+            editButton.addEventListener('click', async () => {
+                document.location.hash = `/order/${editButton.id}`;
+
+            });
+        }); 
     },
     render: async () => {
         const orders = await getOrders();  
@@ -34,6 +41,7 @@ const OrderListScreen = {
                                 <th>Дата заказа</th>
                                 <th>Стоимость</th>
                                 <th>Пользователь</th>
+                                <th>Выполнен</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -44,6 +52,7 @@ const OrderListScreen = {
                                     <td>${order.createdAt}</td>
                                     <td>${order.totalPrice}</td>
                                     <td>${order.user.name}</td>
+                                    <td>${order.completedAt || 'Не выполнен'}</td>
                                     <td class = "buttons-td">
                                         <button id = "${order._id}" class = "edit-button primary">Изменить</button>
                                         <button id = "${order._id}" class = "delete-btn primary">Удалить</button>

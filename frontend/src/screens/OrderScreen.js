@@ -1,18 +1,38 @@
-import { getOrder } from "../api";
-import { parseRequestUrl } from "../utils";
+import { completeOrder, getOrder } from "../api";
+import { getUserInfo } from "../localStorage";
+import { hideLoading, parseRequestUrl, rerender, showLoading, showMessage } from "../utils";
 
 const OrderScreen = {
-    after_render: () => {},
-    render: async () => {
+    after_render: () => {
         const request = parseRequestUrl();
-        const { _id, contactInfo, orderItems, totalPrice } = await getOrder(request.id);
+        const completeBtn = document.getElementById('complete-order-button');
+        if( completeBtn != null) {
+            completeBtn.addEventListener('click', async () => {
+                await completeOrder(request.id);
+                showLoading();
+                showMessage('Заказ завершён!');
+                hideLoading();
+                rerender(OrderScreen);
+            });
+        }
+    },
+    render: async () => {
+        const { isAdmin } = getUserInfo();
+        const request = parseRequestUrl();
+        const { _id, contactInfo, orderItems, totalPrice, isCompleted, completedAt } = await getOrder(request.id);
         return `
             <div>
                 <div class = "cart content">
                     <div class = "order-info">
                         <div class = "cart-list">
                             <ul class = "cart-list-container">
-                                <li><h1>Заказ №${_id}</h1></li>
+                                <li id = "order-state"><h1>Заказ №${_id}</h1>
+                                    ${
+                                        isCompleted
+                                        ? `<div class="success">Выполнен ${completedAt}</div>`
+                                        : `<div class="error">Не выполнен</div>`
+                                    }
+                                </li>
                                 <li id = "contact-li">
                                     <h2>Контактные данные</h2>
                                     <div>
@@ -44,7 +64,10 @@ const OrderScreen = {
                         </div>
                     </div>
                     <div class = "order-action" >
-                        <h3>Итоговая сумма: ${totalPrice} руб.</h3>     
+                        <h3>Итоговая сумма: ${totalPrice} руб.</h3> 
+                        ${!isCompleted && isAdmin ?
+                            `<button id = "complete-order-button" class = "primary">Завершить заказ</button>` :
+                            ''}    
                     </div>
                 </div>
             </div>

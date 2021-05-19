@@ -16,6 +16,8 @@ const orderSchema = new mongoose.Schema({
         firmPhone: String,
     },
     totalPrice: Number,
+    isCompleted: { type: Boolean, required: true, default: false },
+    completedAt: Date,
 }, {
     timestamps: true,
 });
