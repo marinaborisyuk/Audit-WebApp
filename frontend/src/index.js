@@ -14,11 +14,16 @@ import DashboardScreen from './screens/DashboardScreen';
 import ServiceListScreen from './screens/ServiceListScreen';
 import ServiceEditScreen from './screens/ServiceEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
+import EmployeeListScreen from './screens/EmployeeListScreen';
+import EmployeeEditScreen from './screens/EmployeeEditScreen';
+import EmployeeCreateScreen from './screens/EmployeeCreateScreen';
+import ServiceCreateScreen from './screens/ServiceCreateScreen';
 
 const routes = {
     "/": HomeScreen,
     "/service/:id": ServiceScreen,
     "/service/:id/edit": ServiceEditScreen,
+    "/service/:id/create": ServiceCreateScreen,
     "/order/:id": OrderScreen,
     "/cart/:id": CartScreen,
     "/cart": CartScreen,
@@ -30,7 +35,9 @@ const routes = {
     "/dashboard": DashboardScreen,
     "/servicelist": ServiceListScreen,
     "/orderlist": OrderListScreen,
-
+    "/employeelist": EmployeeListScreen,
+    "/employee/:id/edit": EmployeeEditScreen,
+    "/employee/:id/create": EmployeeCreateScreen,
 };
 
 const router = async () => {

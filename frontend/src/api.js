@@ -3,6 +3,104 @@ import { apiUrl } from "./config";
 import { getUserInfo } from "./localStorage";
 
 
+export const getEmployees = async () => {
+    try {
+        const response = await axios({
+            url: `${apiUrl}/api/employees`,
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json',
+            },
+        });
+        if (response.statusText !== 'OK') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch(err) {
+        return {error: err.response.data.message || err.message};
+    }
+};
+
+export const getEmployee = async (id) => {
+    try {
+        const response = await axios({
+            url: `${apiUrl}/api/employees/${id}`,
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json',
+            },
+        });
+        if (response.statusText !== 'OK') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch(err) {
+        return {error: err.response.data.message || err.message};
+    }
+};
+
+export const createEmployee = async () => {
+    try {
+        const { token } = getUserInfo();
+        const response = await axios({
+            url: `${apiUrl}/api/employees`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        if (response.statusText !== 'Created') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        return {error: err.responce.data.message || err.message};
+    }
+};
+
+export const updateEmployee = async (employee) => {
+    try {
+        const { token } = getUserInfo();
+        const response = await axios({
+            url: `${apiUrl}/api/employees/${employee._id}`,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: employee,
+        });
+        if (response.statusText !== 'OK') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        return {error: err.responce.data.message || err.message};
+    }
+};
+
+export const deleteEmployee = async (employeeId) => {
+    try {
+        const { token } = getUserInfo();
+        console.log('loshara');
+        const response = await axios({
+            url: `${apiUrl}/api/employees/${employeeId}`,
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        if (response.statusText !== 'OK') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        return {error: err.responce.data.message || err.message};
+    }
+};
+
 export const getServices = async () => {
     try {
         const response = await axios({

@@ -6,7 +6,7 @@ const ServiceListScreen = {
     after_render: () => {
         document.getElementById('create-service-button').addEventListener('click', async () => {
             const data = await createService();
-            document.location.hash = `/service/${data.service._id}/edit`;
+            document.location.hash = `/service/${data.service._id}/create`;
         });
         const editButtons = document.getElementsByClassName('edit-button');
         Array.from(editButtons).forEach(editButton => {
