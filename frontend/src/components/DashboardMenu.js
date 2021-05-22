@@ -6,6 +6,7 @@ const DashboardMenu = {
                 <li class = "${props.selected === 'orders' ? 'selected' : ''}"><a href = "/#/orderlist">Заказы</a></li>
                 <li class = "${props.selected === 'services' ? 'selected' : ''}"><a href = "/#/servicelist">Услуги</a></li>
                 <li class = "${props.selected === 'employees' ? 'selected' : ''}"><a href = "/#/employeelist">Сотрудники</a></li>
+                <li class = "${props.selected === 'method' ? 'selected' : ''}"><a href = "/#/method">Выбор цели</a></li>
             </ul>
         </div>
     `

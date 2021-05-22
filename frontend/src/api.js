@@ -3,6 +3,26 @@ import { apiUrl } from "./config";
 import { getUserInfo } from "./localStorage";
 
 
+export const getPurposes = async () => {
+    try {
+        const response = await axios({
+            url: `${apiUrl}/api/method`,
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json',
+            },
+        });
+        if (response.statusText !== 'OK') {
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    } catch(err) {
+        return {error: err.response.data.message || err.message};
+    }
+};
+
+
+
 export const getEmployees = async () => {
     try {
         const response = await axios({

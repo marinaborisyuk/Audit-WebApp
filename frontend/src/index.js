@@ -18,6 +18,7 @@ import EmployeeListScreen from './screens/EmployeeListScreen';
 import EmployeeEditScreen from './screens/EmployeeEditScreen';
 import EmployeeCreateScreen from './screens/EmployeeCreateScreen';
 import ServiceCreateScreen from './screens/ServiceCreateScreen';
+import MethodScreen from './screens/MethodScreen';
 
 const routes = {
     "/": HomeScreen,
@@ -38,6 +39,7 @@ const routes = {
     "/employeelist": EmployeeListScreen,
     "/employee/:id/edit": EmployeeEditScreen,
     "/employee/:id/create": EmployeeCreateScreen,
+    "/method": MethodScreen,
 };
 
 const router = async () => {

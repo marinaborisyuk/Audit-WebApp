@@ -9,6 +9,7 @@ import userRouter from './routers/userRouter';
 import orderRouter from './routers/orderRouter';
 import serviceRoter from './routers/serviceRoter';
 import employeeRoter from './routers/employeeRouter';
+import methodRouter from './routers/methodRouter';
 
 mongoose.connect(config.MONGODB_URL, {
     useNewUrlParser: true,
@@ -29,12 +30,16 @@ app.use('/api/users', userRouter);
 app.use('/api/services', serviceRoter);
 app.use('/api/employees', employeeRoter);
 app.use('/api/orders', orderRouter);
+app.use('/api/method', methodRouter);
 
 app.get("/api/services", (req, res) => {
     res.send(data.services);
 });
 app.get("/api/employees", (req, res) => {
     res.send(data.employees);
+});
+app.get("/api/method", (req, res) => {
+    res.send({employees: data.employees, purposes: data.purposes});
 });
 app.use('/uploads', express.static(path.join(__dirname, '/../uploads/')))
 app.use(express.static(path.join(__dirname, '/.../frontend')));

@@ -447,3 +447,7 @@ tbody > tr:nth-child(odd) {
     flex: 1;
 }
 
+#execute-method-button {
+    margin: 2rem;
+}
+
