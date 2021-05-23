@@ -1,10 +1,11 @@
 import axios from "axios";
 import { apiUrl } from "./config";
 import { getUserInfo } from "./localStorage";
+import { saveAs } from 'file-saver';
 
 export const createAndDownloadPdf = async ({employees, purposes, estimates, results}) => {
     try {
-        const responce = await axios({
+        await axios({
             url: `${apiUrl}/api/method/createpdf`,
             method: 'POST',
             header: {
@@ -16,13 +17,19 @@ export const createAndDownloadPdf = async ({employees, purposes, estimates, resu
                 estimates,
                 results
             },
-        });
-        if (responce.statusText !== 'Created') {
-            throw new Error(responce.data.message);
-        }
-        return responce.data;
+        }).then( async () => {
+            const responce = await axios({
+                url: `${apiUrl}/api/method/fetchpdf`,
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/pdf'
+                },
+                responseType: 'blob'});
+            const pdfBlob = new Blob([responce.data], {type: 'application/pdf'});
+            saveAs(pdfBlob, 'newPdf.pdf');  
+            });    
     } catch (err) {
-        return {error: err.response.data.message || err.message};
+        return {error: err.message};
     }
 };
 

@@ -1,7 +1,6 @@
 import DashboardMenu from "../components/DashboardMenu";
-import { createEmployee, getPurposes, createAndDownloadPdf } from "../api";
+import { getPurposes, createAndDownloadPdf } from "../api";
 import { hideLoading, showLoading, showMessage } from "../utils";
-import axios from "axios"; 
 
 const MethodScreen = {
     after_render: () => {       
@@ -65,16 +64,16 @@ const MethodScreen = {
             document.getElementById('get-report-button').addEventListener('click', async (e) => {
                 e.preventDefault();
                 showLoading();
-                const data = await createAndDownloadPdf({
+                await createAndDownloadPdf({
                     employees: employeeNamesRes,
                     purposes: purposeNamesRes,
                     estimates: estimatesRes,
                     results: purposeArrRes,
                 });
                 hideLoading();
-                if (data.error) {
-                    showMessage(data.error);
-                }
+                // if (data.error) {
+                //     showMessage(data.error);
+                // }
             });
         });
         
@@ -101,7 +100,7 @@ const MethodScreen = {
                                 <tr>
                                     <td>${purpose.name}</td>
                                     ${employees.map(employee => `
-                                    <td><input type = "text"  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" required></td>
+                                    <td><input type = "text"  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value = "5" required></td>
                                 `).join('\n')}
                                 </tr>
                                 `).join('\n')}
