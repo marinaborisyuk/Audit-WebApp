@@ -71,9 +71,6 @@ const MethodScreen = {
                     results: purposeArrRes,
                 });
                 hideLoading();
-                // if (data.error) {
-                //     showMessage(data.error);
-                // }
             });
         });
         
@@ -100,7 +97,7 @@ const MethodScreen = {
                                 <tr>
                                     <td>${purpose.name}</td>
                                     ${employees.map(employee => `
-                                    <td><input type = "text"  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value = "5" required></td>
+                                    <td><input type = "text"  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value = "1" required></td>
                                 `).join('\n')}
                                 </tr>
                                 `).join('\n')}

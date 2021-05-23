@@ -1,6 +1,25 @@
-module.exports = ({employees, purposes, eslimates, results}) => {
+module.exports = ({employees, purposes, estimates, results}) => {
     const today = new Date();
-    console.log('spabotalo');
+    const employeeNames = employees.split(',');
+    let count = 0;
+    let countEst = 0;
+    employeeNames.forEach(elem => {count++});
+    const purposeNames = purposes.split(',');
+    const estimateTmpArr = estimates.split(',');
+    const estimateArr  = [];
+    for (let i = 0; i < estimateTmpArr.length; i+=count) {
+       const tmpArr = [];
+       for (let j = 0; j < count; j++) {
+          tmpArr.push(estimateTmpArr[i+j]);
+       }
+       estimateArr.push(tmpArr);
+    }
+    const resultEstimateArr = results.split(',').filter((elem, index) => index %2 != 0);
+    const resultPurposeName = results.split(',').filter((elem, index) => index %2 == 0);
+    let resultStr = '';
+    for (let i = 0; i < resultEstimateArr.length; i++) {
+      resultStr += `${resultPurposeName[i]}: ${resultEstimateArr[i]};\n`;
+    }
     return `
     <!doctype html>
     <html>
@@ -33,9 +52,6 @@ module.exports = ({employees, purposes, eslimates, results}) => {
              .invoice-box table td {
              padding: 5px;
              vertical-align: top;
-             }
-             .invoice-box table tr td:nth-child(2) {
-             text-align: right;
              }
              .invoice-box table tr.top table td {
              padding-bottom: 20px;
@@ -84,7 +100,7 @@ module.exports = ({employees, purposes, eslimates, results}) => {
           <div class="invoice-box">
              <table cellpadding="0" cellspacing="0">
                 <tr class="top">
-                   <td colspan="2">
+                   <td colspan="${count+1}">
                       <table>
                          <tr>
                             <td class="title">РЕЗУЛЬТАТЫ ПРОВЕДЕНИЯ ЭКСПЕРТИЗЫ</td>
@@ -96,34 +112,34 @@ module.exports = ({employees, purposes, eslimates, results}) => {
                    </td>
                 </tr>
                 <tr class="information">
-                   <td colspan="2">
+                   <td colspan="${count}">
                       <table>
                          <tr>
                             <td>
-                               Customer name: ${employees}
-                            </td>
-                            <td>
-                               Receipt number: ${purposes}
+                               Эксперты: ${employees}
                             </td>
                          </tr>
                       </table>
                    </td>
                 </tr>
                 <tr class="heading">
-                   <td>Bought items:</td>
-                   <td>Price</td>
+                  <td></td>
+                   ${employeeNames.map(employeeName => `<td>${employeeName}</td>`).join('\n')}
                 </tr>
-                <tr class="item">
-                   <td>First item:</td>
-                   <td>${eslimates}</td>
-                </tr>
-                <tr class="item">
-                   <td>Second item:</td>
-                   <td>${results}</td>
-                </tr>
+                ${purposeNames.map(purposeName => `
+                                <tr class = "item">
+                                    <td>${purposeName}</td>
+                                    ${estimateArr[countEst++].map(estimate => `
+                                       <td>${estimate}</td>
+                                    `).join('\n')}
+                                </tr>
+                                `).join('\n')}
              </table>
              <br />
-             <h1 class="justify-center">Total price:</h1>
+             <h2>Результаты:</h2>
+             <p>${resultStr}</p>
+             <h1 class="justify-center">Лучшая альтернатива:</h1>
+             <h2 class = "justify-center">${resultPurposeName[0]}</h2>
           </div>
        </body>
     </html>
