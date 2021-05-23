@@ -1,9 +1,9 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Employee from '../models/employeeModel';
+import Pdf from '../models/pdfModel';
 import Purpose from '../models/purposeModel';
-// import { isAuth, isAdmin } from '../utils';
-
+import { isAdmin, isAuth } from '../utils';
 
 const methodRoter = express.Router();
 
@@ -22,6 +22,21 @@ methodRoter.get('/createpurposes', expressAsyncHandler(async (req, res) => {
         res.send(createPurpose);
     } catch (err) {
         res.status(500).send({message: err.message});
+    }
+}));
+
+methodRoter.post('/createpdf', expressAsyncHandler( async (req, res) => {
+    const pdf = new Pdf({
+        estimates: req.body.estimates,
+        employees: req.body.employees,
+        purposes: req.body.purposes,
+        results: req.body.results,
+    });
+    const createdPdf = await pdf.save();
+    if (createdPdf) {
+        res.status(201).send({message: 'Запить добавлена!', pdf: createdPdf});
+    } else {
+        res.status(500).send({message: 'Ошибка при добавлении записи...'});
     }
 }));
 

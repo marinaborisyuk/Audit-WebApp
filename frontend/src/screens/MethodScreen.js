@@ -1,28 +1,40 @@
 import DashboardMenu from "../components/DashboardMenu";
-import { getPurposes } from "../api";
-import { showMessage } from "../utils";
+import { createEmployee, getPurposes, createAndDownloadPdf } from "../api";
+import { hideLoading, showLoading, showMessage } from "../utils";
+import axios from "axios"; 
 
 const MethodScreen = {
     after_render: () => {       
         document.getElementById('execute-method-button').addEventListener('click', async () => {
             const  { employees, purposes } = await getPurposes();
+            const purposeNames = [];
+            purposes.forEach( purpose => purposeNames.push(purpose.name));
+            let purposeNamesRes = purposeNames.join(',');
+
             const coefficients = [];
             let sum = 0; let count = 0;
+            const employeeNames = [];
+
             employees.forEach(employee => {
-                const { competencyEvaluation } = employee; 
-                coefficients.push(competencyEvaluation)
+                const { competencyEvaluation, name } = employee; 
+                coefficients.push(competencyEvaluation);
+                employeeNames.push(name);
                 sum += competencyEvaluation; count++;
-                });
+            });
+            let employeeNamesRes = employeeNames.join(',');
+
             const relativeCompetencyAssessments = coefficients.map(coefficient => {
                 return coefficient/sum;
             });
             const inputs = document.querySelectorAll('input[type="text"]');
             const estimates = [];
+
             inputs.forEach(input => {
                 const { value } = input;
                 if (value)
                 estimates.push(Number(value));
             });
+
             const estimatesMatrix = [];
             for (let i = 0; i < estimates.length; i+=count) {
                 let matrixArr = [];
@@ -31,6 +43,8 @@ const MethodScreen = {
                 }
                 estimatesMatrix.push(matrixArr);
             }
+            let estimatesRes = estimates.join(',');
+
             const targetWeights = [];
             for (let i = 0; i < estimatesMatrix.length; i++) {
                 let weigthRes = 0;
@@ -45,11 +59,25 @@ const MethodScreen = {
                 purposeArr.push(tmp);
             }
             purposeArr.sort((a, b) => b[1] - a[1]);
-            purposeArr.forEach(x => {
-                console.log(x[0]);
-            })
-            showMessage('')
+
+            showMessage(`Лучшая альтернатива: ${purposeArr[0][0]}`);
+            let purposeArrRes = purposeArr.join(',');
+            document.getElementById('get-report-button').addEventListener('click', async (e) => {
+                e.preventDefault();
+                showLoading();
+                const data = await createAndDownloadPdf({
+                    employees: employeeNamesRes,
+                    purposes: purposeNamesRes,
+                    estimates: estimatesRes,
+                    results: purposeArrRes,
+                });
+                hideLoading();
+                if (data.error) {
+                    showMessage(data.error);
+                }
+            });
         });
+        
     },
     render: async () => { 
         const  { employees, purposes } = await getPurposes();
@@ -81,6 +109,7 @@ const MethodScreen = {
                     </table>
                 </div>
                 <button id = "execute-method-button" class = "primary">Выполнить</button>
+                <button id = "get-report-button" class = "primary">Получить отчёт</button>
             </div>
         </div>
     `;

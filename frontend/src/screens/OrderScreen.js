@@ -5,6 +5,7 @@ import { hideLoading, parseRequestUrl, rerender, showLoading, showMessage } from
 const OrderScreen = {
     after_render: () => {
         const request = parseRequestUrl();
+        console.log(request);
         const completeBtn = document.getElementById('complete-order-button');
         if( completeBtn != null) {
             completeBtn.addEventListener('click', async () => {

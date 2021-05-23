@@ -2,6 +2,29 @@ import axios from "axios";
 import { apiUrl } from "./config";
 import { getUserInfo } from "./localStorage";
 
+export const createAndDownloadPdf = async ({employees, purposes, estimates, results}) => {
+    try {
+        const responce = await axios({
+            url: `${apiUrl}/api/method/createpdf`,
+            method: 'POST',
+            header: {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                employees,
+                purposes,
+                estimates,
+                results
+            },
+        });
+        if (responce.statusText !== 'Created') {
+            throw new Error(responce.data.message);
+        }
+        return responce.data;
+    } catch (err) {
+        return {error: err.response.data.message || err.message};
+    }
+};
 
 export const getPurposes = async () => {
     try {
@@ -20,8 +43,6 @@ export const getPurposes = async () => {
         return {error: err.response.data.message || err.message};
     }
 };
-
-
 
 export const getEmployees = async () => {
     try {
