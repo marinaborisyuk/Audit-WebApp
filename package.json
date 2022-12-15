@@ -4,7 +4,8 @@
   "description": "COURSEWORK | AUDIT WEB-APPLICATION",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch backend --exec babel-node backend/server.js",
+    "babel-node": "babel-node --presets=@babel/preset-env",
+    "start": "nodemon --watch backend --exec npm run babel-node backend/server.js",
     "build": "rimraf -rf && babel backend -d dist",
     "serve": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,9 +27,9 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
-    "@babel/core": "^7.14.0",
-    "@babel/node": "^7.13.13",
-    "@babel/preset-env": "^7.14.1",
+    "@babel/core": "^7.20.5",
+    "@babel/node": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",

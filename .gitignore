@@ -1,2 +1,4 @@
 frontend/package.json
 frontend/main.js/main.js
+frontend/node_modules/
+node_modules/
